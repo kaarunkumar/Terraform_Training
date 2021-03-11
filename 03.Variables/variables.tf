@@ -1,8 +1,8 @@
-variable "web_server_location" {
+variable "server_location" {
   type = string
 }
 
-variable "web_server_rg" {
+variable "tftrain_akrg" {
   type = string
 }
 
@@ -10,15 +10,15 @@ variable "resource_prefix" {
   type = string
 }
 
-variable "web_server_address_space" {
+variable "server_address_space" {
   type = string
 }
 
-variable "web_server_address_prefix" {
+variable "server_address_prefix" {
   type = string
 }
 
-variable "web_server_name" {
+variable "server_name" {
   type = string
 }
 

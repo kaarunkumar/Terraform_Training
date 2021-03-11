@@ -3,7 +3,7 @@ provider "azurerm" {
   features {}
 }
 
-resource "azurerm_resource_group" "web_server_rg" {
-  name     = "web-rg"
+resource "azurerm_resource_group" "tftrain_akrg" {
+  name     = "tftrain_akrg"
   location = "westus2"
 }
