@@ -3,52 +3,52 @@ provider "azurerm" {
   features {}
 }
 
-resource "azurerm_resource_group" "web_server_rg" {
-  name     = var.web_server_rg
-  location = var.web_server_location
+resource "azurerm_resource_group" "tftrain_akrg" {
+  name     = var.tftrain_akrg
+  location = var.server_location
 }
 
-resource "azurerm_virtual_network" "web_server_vnet" {
+resource "azurerm_virtual_network" "server_vnet" {
   name                = "${var.resource_prefix}-vnet"
-  location            = var.web_server_location
-  resource_group_name = azurerm_resource_group.web_server_rg.name
-  address_space       = [var.web_server_address_space] 
+  location            = var.server_location
+  resource_group_name = azurerm_resource_group.tftrain_akrg.name
+  address_space       = [var.server_address_space] 
 }
 
-resource "azurerm_subnet" "web_server_subnet" {
+resource "azurerm_subnet" "server_subnet" {
   name                 = "${var.resource_prefix}-subnet"  
-  resource_group_name  = azurerm_resource_group.web_server_rg.name
-  virtual_network_name = azurerm_virtual_network.web_server_vnet.name
-  address_prefix       = var.web_server_address_prefix
+  resource_group_name  = azurerm_resource_group.tftrain_akrg.name
+  virtual_network_name = azurerm_virtual_network.server_vnet.name
+  address_prefix       = var.server_address_prefix
 }
 
-resource "azurerm_network_interface" "web_server_nic" {
-  name                = "${var.web_server_name}-nic"  
-  location            = var.web_server_location
-  resource_group_name = azurerm_resource_group.web_server_rg.name
+resource "azurerm_network_interface" "server_nic" {
+  name                = "${var.server_name}-nic"  
+  location            = var.server_location
+  resource_group_name = azurerm_resource_group.tftrain_akrg.name
 
   ip_configuration {
-     name                          = "${var.web_server_name}-ip"
-     subnet_id                     = azurerm_subnet.web_server_subnet.id
+     name                          = "${var.server_name}-ip"
+     subnet_id                     = azurerm_subnet.server_subnet.id
      private_ip_address_allocation = "dynamic"
-     public_ip_address_id          = azurerm_public_ip.web_server_public_ip.id
+     public_ip_address_id          = azurerm_public_ip.server_public_ip.id
   }
 }
 
-resource "azurerm_public_ip" "web_server_public_ip" {
+resource "azurerm_public_ip" "server_public_ip" {
   name                = "${var.resource_prefix}-public-ip"
-  location            = var.web_server_location  
-  resource_group_name = azurerm_resource_group.web_server_rg.name  
+  location            = var.server_location  
+  resource_group_name = azurerm_resource_group.tftrain_akrg.name  
   allocation_method   = var.environment == "production" ? "Static" : "Dynamic"
 }
 
-resource "azurerm_network_security_group" "web_server_nsg" {
+resource "azurerm_network_security_group" "server_nsg" {
   name                = "${var.resource_prefix}-nsg"
-  location            = var.web_server_location  
-  resource_group_name = azurerm_resource_group.web_server_rg.name    
+  location            = var.server_location  
+  resource_group_name = azurerm_resource_group.tftrain_akrg.name    
 }
 
-resource "azurerm_network_security_rule" "web_server_nsg_rule_rdp" {
+resource "azurerm_network_security_rule" "server_nsg_rule_rdp" {
   name                        = "RDP Inbound"
   priority                    = 100
   direction                   = "Inbound"
@@ -58,22 +58,22 @@ resource "azurerm_network_security_rule" "web_server_nsg_rule_rdp" {
   destination_port_range      = "3389"
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
-  resource_group_name         = azurerm_resource_group.web_server_rg.name   
-  network_security_group_name = azurerm_network_security_group.web_server_nsg.name
+  resource_group_name         = azurerm_resource_group.tftrain_akrg.name   
+  network_security_group_name = azurerm_network_security_group.server_nsg.name
 }
 
-resource "azurerm_network_interface_security_group_association" "web_server_nsg_association" {
-  network_security_group_id = azurerm_network_security_group.web_server_nsg.id  
-  network_interface_id      = azurerm_network_interface.web_server_nic.id
+resource "azurerm_network_interface_security_group_association" "server_nsg_association" {
+  network_security_group_id = azurerm_network_security_group.server_nsg.id  
+  network_interface_id      = azurerm_network_interface.server_nic.id
 }
 
-resource "azurerm_windows_virtual_machine" "web_server" {
-  name                  = var.web_server_name
-  location              = var.web_server_location  
-  resource_group_name   = azurerm_resource_group.web_server_rg.name  
-  network_interface_ids = [azurerm_network_interface.web_server_nic.id]
+resource "azurerm_windows_virtual_machine" "server" {
+  name                  = var.server_name
+  location              = var.server_location  
+  resource_group_name   = azurerm_resource_group.tftrain_akrg.name  
+  network_interface_ids = [azurerm_network_interface.server_nic.id]
   size                  = "Standard_B1s"
-  admin_username        = "webserver"
+  admin_username        = "testtfserver"
   admin_password        = "Passw0rd1234"
 
   os_disk {
