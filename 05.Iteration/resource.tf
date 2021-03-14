@@ -32,7 +32,7 @@ resource "azurerm_network_interface" "server_nic" {
 
   ip_configuration {
      name                          = "${var.server_name}-ip"
-     subnet_id                     = azurerm_subnet.server_subnet["testtf-server"].id
+     subnet_id                     = azurerm_subnet.server_subnet["tf-training"].id
      private_ip_address_allocation = "dynamic"
      public_ip_address_id          = count.index == 0 ? azurerm_public_ip.server_public_ip.id : null
   }
@@ -68,7 +68,7 @@ resource "azurerm_network_security_rule" "server_nsg_rule_rdp" {
 
 resource "azurerm_subnet_network_security_group_association" "server_sag" {
   network_security_group_id = azurerm_network_security_group.server_nsg.id  
-  subnet_id                 = azurerm_subnet.server_subnet["testtf-server"].id
+  subnet_id                 = azurerm_subnet.server_subnet["tf-training"].id
 }
 
 resource "azurerm_windows_virtual_machine" "server" {
