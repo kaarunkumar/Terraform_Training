@@ -7,6 +7,6 @@ server_name           = "testtf"
 environment           = "development"
 server_count          = 2
 server_subnets        = {
-  testtf-server              = "1.0.1.0/24"
+  testtf-server           = "1.0.1.0/24"
   AzureBastionSubnet      = "1.0.2.0/24"
 }
