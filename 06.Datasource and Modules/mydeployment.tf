@@ -1,5 +1,5 @@
 provider "azurerm" {
-  version = "~>2.49"
+  version = "2.2.0"
   features {}
 }
 
@@ -11,8 +11,6 @@ module "net" {
    my_vpc_subnet_cidr = ["192.168.1.0/24"]
    my_vm_count = 2
 }
-
-
 
 module "compute" { 
    source = "./modules/compute"

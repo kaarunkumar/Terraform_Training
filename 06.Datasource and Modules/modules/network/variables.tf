@@ -15,7 +15,7 @@ variable "my_rg_name" {
 variable "admin_username" {
   type        = string
   description = "Administrator username for server"
-  default     = "amitvashist7"
+  default     = "arunkumar"
 }
 
 variable "admin_password" {
@@ -41,4 +41,16 @@ variable "vm_size" {
 }
 
 
-variable "my_nic_id" {}
+variable "my_vpc_cidr" {
+    default = "10.0.0.0/16"
+}
+
+variable "my_vpc_subnet_cidr" {
+    default = "10.0.1.0/24"
+}
+
+
+variable "inbound_ports" {
+     type = list(string)
+    default = ["22","80", "8080"]
+}
