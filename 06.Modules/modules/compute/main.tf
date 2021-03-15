@@ -37,11 +37,3 @@ resource "azurerm_virtual_machine" "example_rg" {
     environment = "staging"
   }
 }
-
-#output "pip" {
-# value = azurerm_public_ip.examplepublicip
-#}
-
-#output "my_vm_public_IP" {
-# value = azurerm_public_ip.examplepublicip.*.ip_address
-#}

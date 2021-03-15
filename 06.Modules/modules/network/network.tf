@@ -4,7 +4,7 @@ resource "azurerm_resource_group" "example_rg" {
   location = var.my_loc
 
   tags = {
-    Owner = "AV"
+    Owner = "testtag"
   }
 }
 
