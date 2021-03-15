@@ -1,8 +1,3 @@
-provider "azurerm" {
-  version = "~>2.49"
-  features {}
-}
-
 module "net" { 
    source = "./modules/network"
    my_rg_name = "tf-training"
