@@ -9,13 +9,13 @@ variable "my_vm_count" {
 
 variable "my_rg_name" {
   description = "My Resource Group Name"
-  default     = "TestRG"
+  default     = "tftraining"
 }
 
 variable "admin_username" {
   type        = string
   description = "Administrator username for server"
-  default     = "amitvashist7"
+  default     = "tftraining"
 }
 
 variable "admin_password" {
